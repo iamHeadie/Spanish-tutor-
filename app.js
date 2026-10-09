@@ -172,4 +172,45 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
+// ---------- Your saved words ----------
+// Words saved from the Translate tab are kept in this browser's localStorage
+// and added to the deck alongside the built-in words.
+const SAVED_KEY = "spanish-tutor.saved-words";
+
+function loadSaved() {
+  try {
+    return JSON.parse(localStorage.getItem(SAVED_KEY)) || [];
+  } catch {
+    return [];
+  }
+}
+
+// "la casa" and "casa" count as the same word.
+function deckKey(es) {
+  return es.toLowerCase().replace(/^(el\/la|el|la|los|las) /, "");
+}
+
+function inDeck(es) {
+  return WORDS.some((w) => deckKey(w.es) === deckKey(es));
+}
+
+// Returns false if the word is already in the deck.
+function addToDeck(word) {
+  if (inDeck(word.es)) return false;
+  WORDS.push(word);
+  try {
+    localStorage.setItem(SAVED_KEY, JSON.stringify([...loadSaved(), word]));
+  } catch {
+    // Storage blocked: the word stays in the deck until the page is closed.
+  }
+  // Join the round in progress so it comes up without restarting.
+  if (!$("study").hidden) {
+    queue.push(WORDS.length - 1);
+    roundSize++;
+    updateProgress();
+  }
+  return true;
+}
+
+WORDS.push(...loadSaved().filter((w) => !inDeck(w.es)));
 startRound(WORDS.keys());
