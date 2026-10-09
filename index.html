@@ -13,6 +13,7 @@
       <nav class="tabs" aria-label="Sections">
         <button class="tab" type="button" data-view="view-cards" aria-pressed="true">Flashcards</button>
         <button class="tab" type="button" data-view="view-alpha" aria-pressed="false">Alphabet</button>
+        <button class="tab" type="button" data-view="view-translate" aria-pressed="false">Translate</button>
       </nav>
     </header>
 
@@ -119,11 +120,55 @@
         </div>
       </section>
     </div>
+
+    <div id="view-translate" class="view" hidden>
+      <form class="translate-form" id="translate-form" novalidate>
+        <label class="sr-only" for="translate-input">English word</label>
+        <input class="translate-input" id="translate-input" type="text" lang="en"
+               placeholder="Type an English word" maxlength="40"
+               autocomplete="off" autocapitalize="off" enterkeyhint="go" required>
+        <button class="btn knew" id="translate-btn" type="submit">Translate</button>
+      </form>
+
+      <p class="suggestions" id="suggestions">
+        <span>Try:</span>
+        <button class="chip" type="button">cheese</button>
+        <button class="chip" type="button">to run</button>
+        <button class="chip" type="button">beautiful</button>
+        <button class="chip" type="button">light</button>
+      </p>
+
+      <p class="translate-status" id="translate-status" role="status" aria-live="polite"></p>
+
+      <article class="result" id="translate-result" hidden>
+        <div class="result-head">
+          <p class="result-word" lang="es"><span class="result-article" id="r-article"></span><span id="r-spanish"></span></p>
+          <button class="speak" id="r-speak" type="button"
+                  aria-label="Hear pronunciation" title="Hear pronunciation">🔊</button>
+        </div>
+        <p class="result-tags">
+          <span class="pill" id="r-pos"></span>
+          <span class="pill gender" id="r-gender"></span>
+        </p>
+        <p class="result-english" id="r-english"></p>
+        <div class="example">
+          <p class="example-es" lang="es">
+            <span id="r-example-es"></span>
+            <button class="speak small" id="r-speak-example" type="button"
+                    aria-label="Hear example sentence" title="Hear example sentence">🔊</button>
+          </p>
+          <p class="example-en" id="r-example-en"></p>
+        </div>
+        <p class="result-note" id="r-note"></p>
+        <button class="btn save" id="r-save" type="button">＋ Save to flashcards</button>
+      </article>
+    </div>
   </main>
 
   <script src="words.js"></script>
   <script src="speech.js"></script>
   <script src="app.js"></script>
   <script src="alphabet.js"></script>
+  <script src="translate.js"></script>
 </body>
 </html>

@@ -1,0 +1,13 @@
+{
+  "name": "spanish-tutor",
+  "private": true,
+  "type": "module",
+  "description": "Spanish learning app: flashcards, alphabet trainer and a Claude-powered translator",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "0.132.1",
+    "zod": "4.6.5"
+  }
+}
