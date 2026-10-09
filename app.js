@@ -124,44 +124,8 @@ function finish() {
   $("btn-review").hidden = missed.size === 0;
 }
 
-// ---------- Pronunciation (browser's built-in text-to-speech) ----------
-const canSpeak = "speechSynthesis" in window;
-let spanishVoice = null;
-let speakingBtn = null;
-
-function pickVoice() {
-  const voices = speechSynthesis.getVoices();
-  spanishVoice =
-    voices.find((v) => v.lang === "es-ES") ||
-    voices.find((v) => v.lang.toLowerCase().startsWith("es")) ||
-    null;
-}
-
-function speak(text, btn) {
-  if (!canSpeak) return;
-  speechSynthesis.cancel();
-  speakingBtn?.classList.remove("speaking");
-
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = spanishVoice ? spanishVoice.lang : "es-ES";
-  if (spanishVoice) u.voice = spanishVoice;
-  u.rate = 0.85; // a little slower than normal, easier for learners
-
-  speakingBtn = btn;
-  btn.classList.add("speaking");
-  u.onend = u.onerror = () => {
-    if (speakingBtn === btn) {
-      btn.classList.remove("speaking");
-      speakingBtn = null;
-    }
-  };
-  speechSynthesis.speak(u);
-}
-
-if (canSpeak) {
-  pickVoice();
-  speechSynthesis.addEventListener("voiceschanged", pickVoice);
-} else {
+// Speech comes from speech.js (shared with the alphabet section).
+if (!canSpeak) {
   speakWordBtn.hidden = true;
   speakExampleBtn.hidden = true;
 }
@@ -185,7 +149,7 @@ $("btn-restart").addEventListener("click", () => startRound(WORDS.keys()));
 $("btn-review").addEventListener("click", () => startRound(missed));
 
 document.addEventListener("keydown", (e) => {
-  if ($("study").hidden || e.ctrlKey || e.metaKey || e.altKey) return;
+  if ($("view-cards").hidden || $("study").hidden || e.ctrlKey || e.metaKey || e.altKey) return;
   // Let focused buttons handle Space/Enter themselves.
   if (e.target.tagName === "BUTTON" && (e.key === " " || e.key === "Enter")) return;
 

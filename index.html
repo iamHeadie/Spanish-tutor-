@@ -3,66 +3,127 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Spanish Flashcards</title>
+  <title>Spanish Tutor</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main class="app">
     <header class="top">
-      <h1>Spanish Flashcards</h1>
-      <p class="progress" id="progress" aria-live="polite"></p>
-      <div class="bar" aria-hidden="true"><div class="bar-fill" id="bar-fill"></div></div>
+      <h1>Spanish Tutor</h1>
+      <nav class="tabs" aria-label="Sections">
+        <button class="tab" type="button" data-view="view-cards" aria-pressed="true">Flashcards</button>
+        <button class="tab" type="button" data-view="view-alpha" aria-pressed="false">Alphabet</button>
+      </nav>
     </header>
 
-    <section id="study" class="study">
-      <div class="scene">
-        <div class="card" id="card" role="button" tabindex="0"
-             aria-label="Flashcard. Press Space to flip.">
-          <div class="face front">
-            <span class="label">Spanish</span>
-            <p class="word" id="front-word" lang="es"></p>
-            <button class="speak" id="speak-word" type="button"
-                    aria-label="Hear pronunciation" title="Hear pronunciation (S)">🔊</button>
-            <span class="hint">Tap the card to flip</span>
-          </div>
-          <div class="face back">
-            <span class="label">English</span>
-            <p class="word" id="back-word"></p>
-            <div class="example">
-              <p class="example-es" lang="es">
-                <span id="example-es"></span>
-                <button class="speak small" id="speak-example" type="button"
-                        aria-label="Hear example sentence" title="Hear example sentence">🔊</button>
-              </p>
-              <p class="example-en" id="example-en"></p>
+    <div id="view-cards" class="view">
+      <div class="progress-wrap">
+        <p class="progress" id="progress" aria-live="polite"></p>
+        <div class="bar" aria-hidden="true"><div class="bar-fill" id="bar-fill"></div></div>
+      </div>
+
+      <section id="study" class="study">
+        <div class="scene">
+          <div class="card" id="card" role="button" tabindex="0"
+               aria-label="Flashcard. Press Space to flip.">
+            <div class="face front">
+              <span class="label">Spanish</span>
+              <p class="word" id="front-word" lang="es"></p>
+              <button class="speak" id="speak-word" type="button"
+                      aria-label="Hear pronunciation" title="Hear pronunciation (S)">🔊</button>
+              <span class="hint">Tap the card to flip</span>
+            </div>
+            <div class="face back">
+              <span class="label">English</span>
+              <p class="word" id="back-word"></p>
+              <div class="example">
+                <p class="example-es" lang="es">
+                  <span id="example-es"></span>
+                  <button class="speak small" id="speak-example" type="button"
+                          aria-label="Hear example sentence" title="Hear example sentence">🔊</button>
+                </p>
+                <p class="example-en" id="example-en"></p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="actions">
-        <button class="btn miss" id="btn-miss" type="button" disabled>
-          ✗ Didn't know <kbd>←</kbd>
-        </button>
-        <button class="btn knew" id="btn-knew" type="button" disabled>
-          ✓ Knew it <kbd>→</kbd>
-        </button>
-      </div>
-      <p class="keys">Space: flip · S: speak · ←/→: answer</p>
-    </section>
+        <div class="actions">
+          <button class="btn miss" id="btn-miss" type="button" disabled>
+            ✗ Didn't know <kbd>←</kbd>
+          </button>
+          <button class="btn knew" id="btn-knew" type="button" disabled>
+            ✓ Knew it <kbd>→</kbd>
+          </button>
+        </div>
+        <p class="keys">Space: flip · S: speak · ←/→: answer</p>
+      </section>
 
-    <section id="done" class="done" hidden>
-      <h2>¡Muy bien! 🎉</h2>
-      <p id="summary"></p>
-      <ul class="missed-list" id="missed-list"></ul>
-      <div class="actions">
-        <button class="btn" id="btn-review" type="button">Review missed words</button>
-        <button class="btn knew" id="btn-restart" type="button">Start over</button>
-      </div>
-    </section>
+      <section id="done" class="done" hidden>
+        <h2>¡Muy bien! 🎉</h2>
+        <p id="summary"></p>
+        <ul class="missed-list" id="missed-list"></ul>
+        <div class="actions">
+          <button class="btn" id="btn-review" type="button">Review missed words</button>
+          <button class="btn knew" id="btn-restart" type="button">Start over</button>
+        </div>
+      </section>
+    </div>
+
+    <div id="view-alpha" class="view" hidden>
+      <nav class="segmented" aria-label="Alphabet mode">
+        <button class="seg" type="button" data-mode="alpha-learn" aria-pressed="true">Learn</button>
+        <button class="seg" type="button" data-mode="alpha-quiz" aria-pressed="false">Quiz</button>
+      </nav>
+
+      <!-- Learn: tap a letter to hear its name and see an example word -->
+      <section id="alpha-learn">
+        <div class="letter-detail" id="letter-detail" aria-live="polite">
+          <p class="detail-letter" id="detail-letter" lang="es"></p>
+          <div class="detail-info">
+            <p class="detail-name"><span class="label-inline">Name</span>
+              <span id="detail-name" lang="es"></span></p>
+            <p class="detail-alt" id="detail-alt"></p>
+            <p class="detail-word">
+              <span id="detail-word" lang="es"></span>
+              <button class="speak small" id="speak-letter-word" type="button"
+                      aria-label="Hear example word" title="Hear example word">🔊</button>
+            </p>
+            <p class="detail-en" id="detail-en"></p>
+          </div>
+        </div>
+        <div class="letter-grid" id="letter-grid"></div>
+        <p class="keys">Tap a letter to hear its name</p>
+      </section>
+
+      <!-- Quiz: hear a letter, pick it from 4 options -->
+      <section id="alpha-quiz" hidden>
+        <p class="quiz-score" id="quiz-score"></p>
+        <div class="quiz-prompt">
+          <button class="speak big" id="quiz-play" type="button"
+                  aria-label="Play the letter again" title="Play again (R)">🔊</button>
+          <p id="quiz-question">Which letter did you hear?</p>
+        </div>
+        <div class="quiz-options" id="quiz-options"></div>
+        <p class="quiz-feedback" id="quiz-feedback" aria-live="polite"></p>
+        <div class="actions">
+          <button class="btn knew" id="quiz-next" type="button" hidden>Next letter <kbd>Enter</kbd></button>
+        </div>
+        <p class="keys">1–4: answer · R: replay · Enter: next</p>
+
+        <div class="practice">
+          <h2>Letters to practice</h2>
+          <p class="practice-note">Letters you miss come up more often until you get them right.</p>
+          <ul class="missed-list" id="practice-list"></ul>
+          <button class="link-btn" id="practice-reset" type="button">Reset quiz progress</button>
+        </div>
+      </section>
+    </div>
   </main>
 
   <script src="words.js"></script>
+  <script src="speech.js"></script>
   <script src="app.js"></script>
+  <script src="alphabet.js"></script>
 </body>
 </html>
