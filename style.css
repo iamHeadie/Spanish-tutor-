@@ -1,0 +1,266 @@
+:root {
+  --bg: #fdf6ec;
+  --ink: #2b2118;
+  --muted: #8a7a6a;
+  --card: #ffffff;
+  --card-back: #fff4e0;
+  --accent: #c8102e;   /* Spanish flag red */
+  --gold: #f1bf00;     /* Spanish flag yellow */
+  --good: #2e8b57;
+  --bad: #c8402e;
+  --shadow: 0 10px 30px rgba(60, 40, 20, 0.15);
+  --radius: 18px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1d1915;
+    --ink: #f3eadf;
+    --muted: #a8998a;
+    --card: #2a241e;
+    --card-back: #342a1f;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  display: flex;
+  justify-content: center;
+}
+
+.app {
+  width: 100%;
+  max-width: 520px;
+  padding: 24px 16px 40px;
+}
+
+/* ---------- Header & progress ---------- */
+
+.top { text-align: center; margin-bottom: 20px; }
+
+h1 {
+  margin: 0 0 4px;
+  font-size: 1.6rem;
+  background: linear-gradient(90deg, var(--accent), var(--gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.progress { margin: 0 0 10px; color: var(--muted); font-size: 0.95rem; }
+
+.bar {
+  height: 8px;
+  border-radius: 99px;
+  background: rgba(128, 100, 70, 0.18);
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--accent), var(--gold));
+  transition: width 0.4s ease;
+}
+
+/* ---------- The flip card ---------- */
+
+/* .scene gives the 3D perspective; .card rotates; each .face is one side. */
+.scene { perspective: 1000px; }
+
+.card {
+  position: relative;
+  height: 320px;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+  border-radius: var(--radius);
+  outline: none;
+}
+
+.card.flipped { transform: rotateY(180deg); }
+
+/* Used when jumping to the next card so it snaps back without showing the answer. */
+.card.no-anim { transition: none; }
+
+.card:focus-visible .face { box-shadow: 0 0 0 4px var(--gold), var(--shadow); }
+
+.face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  border-radius: var(--radius);
+  background: var(--card);
+  box-shadow: var(--shadow);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  text-align: center;
+}
+
+.back {
+  transform: rotateY(180deg);
+  background: var(--card-back);
+}
+
+.label {
+  position: absolute;
+  top: 16px;
+  left: 20px;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.word {
+  margin: 0;
+  font-size: clamp(2rem, 9vw, 3rem);
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.front .word { color: var(--accent); }
+
+.hint {
+  position: absolute;
+  bottom: 16px;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.example {
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px dashed rgba(128, 100, 70, 0.35);
+  width: 100%;
+}
+
+.example-es {
+  margin: 0 0 6px;
+  font-size: 1.15rem;
+  font-style: italic;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.example-en { margin: 0; color: var(--muted); }
+
+/* New card slides in after each answer. */
+.card.enter .face { animation: enter 0.35s ease; }
+
+@keyframes enter {
+  from { opacity: 0; transform: translateY(14px) scale(0.97); }
+}
+/* .back has its own rotate, so it needs a matching keyframe. */
+.card.enter .back { animation-name: enter-back; }
+@keyframes enter-back {
+  from { opacity: 0; transform: rotateY(180deg) translateY(14px) scale(0.97); }
+}
+
+/* ---------- Buttons ---------- */
+
+.speak {
+  margin-top: 18px;
+  width: 52px;
+  height: 52px;
+  border: none;
+  border-radius: 50%;
+  background: var(--gold);
+  font-size: 1.4rem;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  transition: transform 0.15s ease;
+}
+
+.speak:hover { transform: scale(1.08); }
+.speak:active { transform: scale(0.95); }
+.speak.small { margin: 0; width: 34px; height: 34px; font-size: 0.95rem; flex-shrink: 0; }
+.speak.speaking { animation: pulse 0.8s ease infinite; }
+
+@keyframes pulse {
+  50% { transform: scale(1.12); }
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.btn {
+  flex: 1;
+  padding: 14px 12px;
+  border: 2px solid var(--muted);
+  border-radius: 12px;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.1s ease, opacity 0.2s ease, background 0.2s ease;
+}
+
+.btn:active:not(:disabled) { transform: scale(0.97); }
+.btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+.btn.knew { border-color: var(--good); background: var(--good); color: #fff; }
+.btn.miss { border-color: var(--bad); color: var(--bad); }
+.btn.miss:hover:not(:disabled) { background: rgba(200, 64, 46, 0.08); }
+
+kbd {
+  margin-left: 4px;
+  padding: 0 5px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  opacity: 0.7;
+  border: 1px solid currentColor;
+}
+
+.keys { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 14px; }
+
+@media (hover: none) {
+  kbd, .keys { display: none; }
+}
+
+/* ---------- Finished screen ---------- */
+
+.done { text-align: center; }
+.done h2 { font-size: 2rem; margin: 30px 0 8px; }
+
+.missed-list {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.missed-list li {
+  padding: 6px 12px;
+  border-radius: 99px;
+  background: var(--card);
+  box-shadow: var(--shadow);
+  font-size: 0.9rem;
+}
+
+[hidden] { display: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .card, .bar-fill, .speak, .btn { transition: none; }
+  .card.enter .face, .speak.speaking { animation: none; }
+}

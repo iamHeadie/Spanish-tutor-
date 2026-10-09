@@ -1,0 +1,23 @@
+// The deck. To add a word, append an object with the same four fields.
+const WORDS = [
+  { es: "hola", en: "hello", example: "¡Hola! ¿Cómo estás?", exampleEn: "Hello! How are you?" },
+  { es: "adiós", en: "goodbye", example: "Adiós, hasta mañana.", exampleEn: "Goodbye, see you tomorrow." },
+  { es: "gracias", en: "thank you", example: "Muchas gracias por la ayuda.", exampleEn: "Thank you very much for the help." },
+  { es: "por favor", en: "please", example: "Un café, por favor.", exampleEn: "A coffee, please." },
+  { es: "sí", en: "yes", example: "Sí, me gusta mucho.", exampleEn: "Yes, I like it a lot." },
+  { es: "agua", en: "water", example: "Quiero un vaso de agua.", exampleEn: "I want a glass of water." },
+  { es: "casa", en: "house / home", example: "Mi casa es pequeña.", exampleEn: "My house is small." },
+  { es: "perro", en: "dog", example: "El perro está en el jardín.", exampleEn: "The dog is in the garden." },
+  { es: "gato", en: "cat", example: "El gato duerme mucho.", exampleEn: "The cat sleeps a lot." },
+  { es: "libro", en: "book", example: "Leo un libro cada noche.", exampleEn: "I read a book every night." },
+  { es: "comida", en: "food / meal", example: "La comida está deliciosa.", exampleEn: "The food is delicious." },
+  { es: "amigo", en: "friend", example: "Juan es mi mejor amigo.", exampleEn: "Juan is my best friend." },
+  { es: "familia", en: "family", example: "Mi familia vive en México.", exampleEn: "My family lives in Mexico." },
+  { es: "día", en: "day", example: "Hoy es un buen día.", exampleEn: "Today is a good day." },
+  { es: "noche", en: "night", example: "Buenas noches, mamá.", exampleEn: "Good night, Mom." },
+  { es: "escuela", en: "school", example: "Los niños van a la escuela.", exampleEn: "The children go to school." },
+  { es: "feliz", en: "happy", example: "Estoy muy feliz hoy.", exampleEn: "I am very happy today." },
+  { es: "grande", en: "big", example: "La ciudad es muy grande.", exampleEn: "The city is very big." },
+  { es: "comer", en: "to eat", example: "Vamos a comer a las dos.", exampleEn: "We're going to eat at two." },
+  { es: "hablar", en: "to speak", example: "¿Hablas español?", exampleEn: "Do you speak Spanish?" },
+];
