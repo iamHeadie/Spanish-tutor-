@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spanish Flashcards</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <header class="top">
+      <h1>Spanish Flashcards</h1>
+      <p class="progress" id="progress" aria-live="polite"></p>
+      <div class="bar" aria-hidden="true"><div class="bar-fill" id="bar-fill"></div></div>
+    </header>
+
+    <section id="study" class="study">
+      <div class="scene">
+        <div class="card" id="card" role="button" tabindex="0"
+             aria-label="Flashcard. Press Space to flip.">
+          <div class="face front">
+            <span class="label">Spanish</span>
+            <p class="word" id="front-word" lang="es"></p>
+            <button class="speak" id="speak-word" type="button"
+                    aria-label="Hear pronunciation" title="Hear pronunciation (S)">🔊</button>
+            <span class="hint">Tap the card to flip</span>
+          </div>
+          <div class="face back">
+            <span class="label">English</span>
+            <p class="word" id="back-word"></p>
+            <div class="example">
+              <p class="example-es" lang="es">
+                <span id="example-es"></span>
+                <button class="speak small" id="speak-example" type="button"
+                        aria-label="Hear example sentence" title="Hear example sentence">🔊</button>
+              </p>
+              <p class="example-en" id="example-en"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn miss" id="btn-miss" type="button" disabled>
+          ✗ Didn't know <kbd>←</kbd>
+        </button>
+        <button class="btn knew" id="btn-knew" type="button" disabled>
+          ✓ Knew it <kbd>→</kbd>
+        </button>
+      </div>
+      <p class="keys">Space: flip · S: speak · ←/→: answer</p>
+    </section>
+
+    <section id="done" class="done" hidden>
+      <h2>¡Muy bien! 🎉</h2>
+      <p id="summary"></p>
+      <ul class="missed-list" id="missed-list"></ul>
+      <div class="actions">
+        <button class="btn" id="btn-review" type="button">Review missed words</button>
+        <button class="btn knew" id="btn-restart" type="button">Start over</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="words.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
